@@ -1,3 +1,10 @@
+export type LearningPathModule = {
+  title: string;
+  description: string;
+  lessons: string[];
+  href: string;
+};
+
 export type LearningPath = {
   slug: string;
   title: {
@@ -23,16 +30,8 @@ export type LearningPath = {
     en: string[];
   };
   modules: {
-    fr: {
-      title: string;
-      description: string;
-      lessons: string[];
-    }[];
-    en: {
-      title: string;
-      description: string;
-      lessons: string[];
-    }[];
+    fr: LearningPathModule[];
+    en: LearningPathModule[];
   };
   deliverables: {
     fr: string[];
@@ -82,7 +81,7 @@ This beginner path was designed to give you a clear, structured and directly usa
         "Comprendre ce qu’est la Data Governance et ce qu’elle n’est pas",
         "Identifier les principaux enjeux : qualité, conformité, sécurité, exploitation",
         "Connaître les 4 piliers d’une gouvernance des données efficace",
-        "Comprendre les 3 grands processus : collecte, gouvernance, exploitation",
+        "Comprendre les grands processus : collecte, gouvernance, exploitation",
         "Distinguer les rôles Data Owner, Data Steward et Data Architect",
         "Savoir structurer les premières étapes d’une démarche de gouvernance",
       ],
@@ -90,7 +89,7 @@ This beginner path was designed to give you a clear, structured and directly usa
         "Understand what Data Governance is and what it is not",
         "Identify the main challenges: quality, compliance, security and usage",
         "Know the 4 pillars of effective data governance",
-        "Understand the 3 core processes: collection, governance and exploitation",
+        "Understand the major processes: collection, governance, exploitation",
         "Differentiate Data Owner, Data Steward and Data Architect roles",
         "Structure the first steps of a governance initiative",
       ],
@@ -107,6 +106,7 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Définition simple de la Data Governance",
             "Pourquoi une donnée sans gouvernance perd de sa valeur",
           ],
+          href: "/tutorials/comprendre-data-governance",
         },
         {
           title: "Module 2 — Comprendre les enjeux business et risques",
@@ -118,6 +118,7 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Lien avec le RGPD, la CNIL et les exigences de conformité",
             "Lien avec la cybersécurité, la confiance et l’auditabilité",
           ],
+          href: "/tutorials/enjeux-risques-data-governance",
         },
         {
           title: "Module 3 — Les 4 piliers d’une gouvernance efficace",
@@ -129,20 +130,10 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Pilier 3 : rôles et responsabilités",
             "Pilier 4 : valorisation et exploitation décisionnelle",
           ],
+          href: "/tutorials/4-piliers-data-governance",
         },
         {
-          title: "Module 4 — Les 3 processus fondamentaux",
-          description:
-            "Comprendre la chaîne continue qui permet de collecter, gouverner et exploiter les données.",
-          lessons: [
-            "Collecte et intégration : ERP, CRM, fichiers, API, pipelines",
-            "Gouvernance et qualité : contrôles, politiques, standards, métadonnées",
-            "Exploitation analytique : BI, tableaux de bord, décisions, valeur métier",
-            "Pourquoi ces 3 processus doivent rester alignés",
-          ],
-        },
-        {
-          title: "Module 5 — Les rôles clés de la gouvernance",
+          title: "Module 4 — Les rôles et responsabilités",
           description:
             "Comprendre qui fait quoi dans une organisation orientée gouvernance des données.",
           lessons: [
@@ -151,18 +142,31 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Le Data Architect : architecture, modélisation, intégration",
             "Pourquoi le RACI est indispensable",
           ],
+          href: "/tutorials/raci-gouvernance-data",
         },
         {
-          title: "Module 6 — Démarrer une démarche de Data Governance",
+          title: "Module 5 — Qualité de données et pilotage",
           description:
-            "Savoir structurer les premières étapes d’un plan d’action réaliste et crédible.",
+            "Comprendre comment piloter la qualité à travers des dimensions, contrôles et scorecards.",
           lessons: [
-            "Partir des besoins métiers et des cas d’usage prioritaires",
-            "Cartographier les données et les sources",
-            "Définir l’organisation, les politiques et les normes",
-            "Choisir quelques KPI de pilotage",
-            "Former les équipes et suivre la maturité",
+            "Dimensions de qualité",
+            "Règles de contrôle",
+            "Seuils et scorecards",
+            "Suivi dans le temps",
           ],
+          href: "/tutorials/scorecard-qualite-donnees",
+        },
+        {
+          title: "Module 6 — Construire une feuille de route 90 jours",
+          description:
+            "Transformer le diagnostic en plan d’action avec quick wins, priorités et responsables.",
+          lessons: [
+            "Prioriser les écarts",
+            "Identifier les quick wins",
+            "Définir responsables et échéances",
+            "Structurer la roadmap 30/60/90 jours",
+          ],
+          href: "/tutorials/feuille-route-data-governance-90-jours",
         },
       ],
       en: [
@@ -176,6 +180,7 @@ This beginner path was designed to give you a clear, structured and directly usa
             "A simple definition of Data Governance",
             "Why data without governance loses value",
           ],
+          href: "/tutorials/comprendre-data-governance",
         },
         {
           title: "Module 2 — Understand business challenges and risks",
@@ -187,6 +192,7 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Connection with GDPR and compliance expectations",
             "Connection with cybersecurity, trust and auditability",
           ],
+          href: "/tutorials/enjeux-risques-data-governance",
         },
         {
           title: "Module 3 — The 4 pillars of effective governance",
@@ -198,20 +204,10 @@ This beginner path was designed to give you a clear, structured and directly usa
             "Pillar 3: roles and responsibilities",
             "Pillar 4: value creation and analytical use",
           ],
+          href: "/tutorials/4-piliers-data-governance",
         },
         {
-          title: "Module 4 — The 3 fundamental processes",
-          description:
-            "Understand the continuous chain that makes it possible to collect, govern and exploit data.",
-          lessons: [
-            "Collection and integration: ERP, CRM, files, APIs, pipelines",
-            "Governance and quality: controls, policies, standards, metadata",
-            "Analytical exploitation: BI, dashboards, decisions, business value",
-            "Why these 3 processes must stay aligned",
-          ],
-        },
-        {
-          title: "Module 5 — Key governance roles",
+          title: "Module 4 — Roles and responsibilities",
           description:
             "Understand who does what in a data governance-oriented organization.",
           lessons: [
@@ -220,18 +216,31 @@ This beginner path was designed to give you a clear, structured and directly usa
             "The Data Architect: architecture, modeling, integration",
             "Why a RACI is essential",
           ],
+          href: "/tutorials/raci-gouvernance-data",
         },
         {
-          title: "Module 6 — Start a Data Governance initiative",
+          title: "Module 5 — Data quality and steering",
           description:
-            "Learn how to structure the first steps of a realistic and credible action plan.",
+            "Understand how to steer quality through dimensions, controls and scorecards.",
           lessons: [
-            "Start from business needs and priority use cases",
-            "Map data and source systems",
-            "Define organization, policies and standards",
-            "Choose a few governance KPIs",
-            "Train teams and monitor maturity",
+            "Quality dimensions",
+            "Control rules",
+            "Thresholds and scorecards",
+            "Long-term monitoring",
           ],
+          href: "/tutorials/scorecard-qualite-donnees",
+        },
+        {
+          title: "Module 6 — Build a 90-day roadmap",
+          description:
+            "Turn the diagnosis into an action plan with quick wins, priorities and owners.",
+          lessons: [
+            "Prioritize gaps",
+            "Identify quick wins",
+            "Define owners and timelines",
+            "Structure the 30/60/90 roadmap",
+          ],
+          href: "/tutorials/feuille-route-data-governance-90-jours",
         },
       ],
     },
@@ -268,4 +277,27 @@ This beginner path was designed to give you a clear, structured and directly usa
 
 export function getLearningPathBySlug(slug: string) {
   return learningPaths.find((item) => item.slug === slug);
+}
+
+export function getNextModuleByTutorialSlug(tutorialSlug: string, locale: "fr" | "en") {
+  const tutorialPath = `/tutorials/${tutorialSlug}`;
+
+  for (const path of learningPaths) {
+    const modules = path.modules[locale];
+    const currentIndex = modules.findIndex((module) => module.href === tutorialPath);
+
+    if (currentIndex !== -1) {
+      const nextModule = modules[currentIndex + 1];
+
+      return {
+        path,
+        currentModule: modules[currentIndex],
+        nextModule: nextModule ?? null,
+        currentIndex,
+        totalModules: modules.length,
+      };
+    }
+  }
+
+  return null;
 }

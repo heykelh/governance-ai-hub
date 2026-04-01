@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import {
+  ArrowRight,
   CheckCircle2,
   Clock3,
   FileText,
@@ -13,7 +14,8 @@ import {
 } from "lucide-react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { getTutorialBySlug, tutorials } from "@/data/tutorials";
+import { getTutorialBySlug } from "@/data/tutorials";
+import { getNextModuleByTutorialSlug } from "@/data/learning-paths";
 import { TutorialCompleteButton } from "@/components/tutorials/tutorial-complete-button";
 import { useLanguage } from "@/providers/language-provider";
 
@@ -25,16 +27,18 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
     notFound();
   }
 
-  const title = tutorial.title[locale];
-  const level = tutorial.level[locale];
-  const category = tutorial.category[locale];
-  const excerpt = tutorial.excerpt[locale];
-  const objectives = tutorial.objectives[locale];
-  const deliverables = tutorial.deliverables[locale];
-  const quickTips = tutorial.quickTips[locale];
-  const recap = tutorial.recap[locale];
+  const typedLocale = locale === "en" ? "en" : "fr";
 
-  const related = tutorials.filter((item) => item.slug !== slug).slice(0, 3);
+  const title = tutorial.title[typedLocale];
+  const level = tutorial.level[typedLocale];
+  const category = tutorial.category[typedLocale];
+  const excerpt = tutorial.excerpt[typedLocale];
+  const objectives = tutorial.objectives[typedLocale];
+  const deliverables = tutorial.deliverables[typedLocale];
+  const quickTips = tutorial.quickTips[typedLocale];
+  const recap = tutorial.recap[typedLocale];
+
+  const progression = getNextModuleByTutorialSlug(slug, typedLocale);
 
   return (
     <main className="min-h-screen text-foreground">
@@ -48,7 +52,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
           <div className="max-w-4xl">
             <div className="font-ui mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200">
               <Sparkles className="h-4 w-4" />
-              {locale === "fr" ? "Tutoriel détaillé" : "Detailed tutorial"}
+              {typedLocale === "fr" ? "Tutoriel détaillé" : "Detailed tutorial"}
             </div>
 
             <div className="mb-4 flex flex-wrap gap-3">
@@ -84,7 +88,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <Target className="h-5 w-5" />
                 <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr" ? "Objectifs" : "Objectives"}
+                  {typedLocale === "fr" ? "Objectifs" : "Objectives"}
                 </span>
               </div>
 
@@ -102,20 +106,20 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
             </div>
 
             {tutorial.sections.map((section, index) => (
-              <div key={section.title[locale]} className="glass-card rounded-[30px] p-6">
+              <div key={section.title[typedLocale]} className="glass-card rounded-[30px] p-6">
                 <div className="mb-4 flex items-center gap-2 text-indigo-300">
                   <GraduationCap className="h-5 w-5" />
                   <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                    {locale === "fr" ? "Contenu" : "Content"} {index + 1}
+                    {typedLocale === "fr" ? "Contenu" : "Content"} {index + 1}
                   </span>
                 </div>
 
                 <h2 className="text-2xl font-semibold text-white">
-                  {section.title[locale]}
+                  {section.title[typedLocale]}
                 </h2>
 
                 <div className="mt-4 space-y-4">
-                  {section.paragraphs[locale].map((paragraph) => (
+                  {section.paragraphs[typedLocale].map((paragraph) => (
                     <p
                       key={paragraph}
                       className="text-sm leading-7 text-slate-300"
@@ -127,7 +131,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
 
                 {section.bullets ? (
                   <ul className="mt-5 space-y-3">
-                    {section.bullets[locale].map((item) => (
+                    {section.bullets[typedLocale].map((item) => (
                       <li
                         key={item}
                         className="flex items-start gap-3 text-sm leading-6 text-slate-300"
@@ -145,7 +149,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <FileText className="h-5 w-5" />
                 <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr"
+                  {typedLocale === "fr"
                     ? "Livrables à produire"
                     : "Deliverables to produce"}
                 </span>
@@ -168,7 +172,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <Lightbulb className="h-5 w-5" />
                 <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr" ? "Conseils rapides" : "Quick tips"}
+                  {typedLocale === "fr" ? "Conseils rapides" : "Quick tips"}
                 </span>
               </div>
 
@@ -189,7 +193,7 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <CheckCircle2 className="h-5 w-5" />
                 <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr" ? "À retenir" : "Key takeaways"}
+                  {typedLocale === "fr" ? "À retenir" : "Key takeaways"}
                 </span>
               </div>
 
@@ -205,6 +209,53 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
                 ))}
               </ul>
             </div>
+
+            {progression?.nextModule ? (
+              <div className="glass-card rounded-[30px] p-6">
+                <div className="mb-4 flex items-center gap-2 text-indigo-300">
+                  <ArrowRight className="h-5 w-5" />
+                  <span className="font-ui text-sm uppercase tracking-[0.18em]">
+                    {typedLocale === "fr" ? "Module suivant" : "Next module"}
+                  </span>
+                </div>
+
+                <p className="text-sm leading-6 text-slate-300">
+                  {typedLocale === "fr"
+                    ? `Tu viens de terminer le module ${progression.currentIndex + 1} sur ${progression.totalModules}. Passe au suivant pour continuer le parcours.`
+                    : `You have just completed module ${progression.currentIndex + 1} of ${progression.totalModules}. Move to the next one to continue the learning path.`}
+                </p>
+
+                <Link
+                  href={progression.nextModule.href}
+                  className="mt-5 inline-flex items-center rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-400"
+                >
+                  {progression.nextModule.title}
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Link>
+              </div>
+            ) : progression ? (
+              <div className="glass-card rounded-[30px] p-6">
+                <div className="mb-4 flex items-center gap-2 text-emerald-300">
+                  <CheckCircle2 className="h-5 w-5" />
+                  <span className="font-ui text-sm uppercase tracking-[0.18em]">
+                    {typedLocale === "fr" ? "Fin du parcours" : "End of path"}
+                  </span>
+                </div>
+
+                <p className="text-sm leading-6 text-slate-300">
+                  {typedLocale === "fr"
+                    ? "Tu as atteint le dernier module de ce parcours. Tu peux revenir au parcours détaillé ou continuer avec un autre domaine."
+                    : "You reached the last module of this path. You can go back to the detailed path or continue with another domain."}
+                </p>
+
+                <Link
+                  href={`/learning-paths/${progression.path.slug}`}
+                  className="mt-5 inline-flex items-center rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-400"
+                >
+                  {typedLocale === "fr" ? "Revoir le parcours" : "Review the path"}
+                </Link>
+              </div>
+            ) : null}
           </div>
 
           <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
@@ -212,14 +263,14 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <Clock3 className="h-5 w-5" />
                 <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr" ? "Progression" : "Progress"}
+                  {typedLocale === "fr" ? "Progression" : "Progress"}
                 </span>
               </div>
 
               <div className="space-y-4">
                 <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
                   <div className="font-ui text-xs uppercase tracking-[0.18em] text-slate-400">
-                    {locale === "fr" ? "Durée estimée" : "Estimated duration"}
+                    {typedLocale === "fr" ? "Durée estimée" : "Estimated duration"}
                   </div>
                   <div className="mt-2 text-2xl font-semibold text-white">
                     {tutorial.duration}
@@ -234,38 +285,21 @@ export function TutorialDetailPage({ slug }: { slug: string }) {
                     +{tutorial.xp}
                   </div>
                 </div>
+
+                {progression ? (
+                  <div className="rounded-[24px] border border-white/10 bg-white/5 p-4">
+                    <div className="font-ui text-xs uppercase tracking-[0.18em] text-slate-400">
+                      {typedLocale === "fr" ? "Position dans le parcours" : "Path position"}
+                    </div>
+                    <div className="mt-2 text-2xl font-semibold text-white">
+                      {progression.currentIndex + 1} / {progression.totalModules}
+                    </div>
+                  </div>
+                ) : null}
               </div>
 
               <div className="mt-6">
                 <TutorialCompleteButton slug={tutorial.slug} xp={tutorial.xp} />
-              </div>
-            </div>
-
-            <div className="glass-card rounded-[30px] p-6">
-              <div className="mb-4 text-indigo-300">
-                <span className="font-ui text-sm uppercase tracking-[0.18em]">
-                  {locale === "fr" ? "Autres tutoriels" : "Other tutorials"}
-                </span>
-              </div>
-
-              <div className="space-y-3">
-                {related.map((item) => (
-                  <Link
-                    key={item.slug}
-                    href={`/tutorials/${item.slug}`}
-                    className="block rounded-[24px] border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-                  >
-                    <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
-                      {item.category[locale]}
-                    </div>
-                    <div className="mt-2 text-base font-semibold text-white">
-                      {item.title[locale]}
-                    </div>
-                    <div className="mt-2 text-sm text-slate-400">
-                      {item.duration} • +{item.xp} XP
-                    </div>
-                  </Link>
-                ))}
               </div>
             </div>
           </div>

@@ -117,9 +117,10 @@ export function LearningPathDetailPage({ slug }: { slug: string }) {
 
               <div className="space-y-5">
                 {modules.map((module, index) => (
-                  <div
+                  <Link
                     key={module.title}
-                    className="rounded-[24px] border border-white/10 bg-white/5 p-5"
+                    href={module.href}
+                    className="block rounded-[24px] border border-white/10 bg-white/5 p-5 transition hover:-translate-y-0.5 hover:bg-white/10"
                   >
                     <div className="font-ui mb-3 text-xs uppercase tracking-[0.18em] text-indigo-300">
                       {locale === "fr" ? "Module" : "Module"} {index + 1}
@@ -144,7 +145,13 @@ export function LearningPathDetailPage({ slug }: { slug: string }) {
                         </li>
                       ))}
                     </ul>
-                  </div>
+
+                    <div className="mt-5 text-sm font-medium text-indigo-300">
+                      {locale === "fr"
+                        ? "Voir le contenu détaillé du module →"
+                        : "View full module content →"}
+                    </div>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -173,7 +180,7 @@ export function LearningPathDetailPage({ slug }: { slug: string }) {
             <div className="glass-card rounded-[30px] p-6">
               <div className="mb-4 flex items-center gap-2 text-indigo-300">
                 <Lightbulb className="h-5 w-5" />
-                <span className="font-ui text-sm uppercase tracking-[0.18em]">
+                <span className="font-ui text-sm uppercase tracking-[0.18em] text-indigo-300">
                   {locale === "fr" ? "À retenir" : "Key takeaways"}
                 </span>
               </div>
@@ -195,54 +202,24 @@ export function LearningPathDetailPage({ slug }: { slug: string }) {
           <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <div className="glass-card rounded-[30px] p-6">
               <div className="font-ui text-sm uppercase tracking-[0.18em] text-indigo-300">
-                {locale === "fr" ? "Tutoriels associés" : "Related tutorials"}
+                {locale === "fr" ? "Accès direct aux modules" : "Direct access to modules"}
               </div>
 
               <div className="mt-4 space-y-3">
-                <Link
-                  href="/tutorials/raci-gouvernance-data"
-                  className="block rounded-[24px] border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-                >
-                  <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
-                    {locale === "fr" ? "Gouvernance Data" : "Data Governance"}
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-white">
-                    {locale === "fr"
-                      ? "Construire un RACI de gouvernance data"
-                      : "Build a data governance RACI"}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">20 min • +120 XP</div>
-                </Link>
-
-                <Link
-                  href="/tutorials/scorecard-qualite-donnees"
-                  className="block rounded-[24px] border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-                >
-                  <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
-                    {locale === "fr" ? "Qualité des données" : "Data Quality"}
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-white">
-                    {locale === "fr"
-                      ? "Bâtir une scorecard qualité de données"
-                      : "Build a data quality scorecard"}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">22 min • +140 XP</div>
-                </Link>
-
-                <Link
-                  href="/tutorials/mini-audit-rgpd-pme"
-                  className="block rounded-[24px] border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
-                >
-                  <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
-                    RGPD
-                  </div>
-                  <div className="mt-2 text-base font-semibold text-white">
-                    {locale === "fr"
-                      ? "Lancer un mini audit RGPD en PME"
-                      : "Run a lightweight GDPR audit in an SME"}
-                  </div>
-                  <div className="mt-2 text-sm text-slate-400">25 min • +150 XP</div>
-                </Link>
+                {modules.map((module, index) => (
+                  <Link
+                    key={module.title}
+                    href={module.href}
+                    className="block rounded-[24px] border border-white/10 bg-white/5 p-4 transition hover:bg-white/10"
+                  >
+                    <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
+                      {locale === "fr" ? "Module" : "Module"} {index + 1}
+                    </div>
+                    <div className="mt-2 text-base font-semibold text-white">
+                      {module.title}
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
 
@@ -253,8 +230,8 @@ export function LearningPathDetailPage({ slug }: { slug: string }) {
 
               <p className="mt-4 text-sm leading-6 text-slate-300">
                 {locale === "fr"
-                  ? "Suis ce parcours en créant au moins un livrable concret : RACI, scorecard, cartographie ou mini feuille de route. C’est ce qui te fera réellement progresser."
-                  : "Follow this path by creating at least one concrete deliverable: RACI, scorecard, map or mini roadmap. That is what will make you really progress."}
+                  ? "Pour vraiment progresser, ouvre chaque module et produis un mini livrable à la fin : définition, schéma, RACI, scorecard ou roadmap."
+                  : "To really improve, open each module and produce one mini deliverable at the end: definition, diagram, RACI, scorecard or roadmap."}
               </p>
             </div>
           </div>

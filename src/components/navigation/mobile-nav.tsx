@@ -1,22 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Search, X } from "lucide-react";
+import { Award, CheckCircle2, Menu, Orbit, X, Zap } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/providers/language-provider";
+import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const { locale, setLocale, t } = useLanguage();
+  const stats = useLearningStats();
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
     { label: t.common.simulator, href: "/audit-simulator" },
-    { label: t.common.library, href: "/resources" },
-    { label: t.common.auditKits, href: "/audit-simulator" },
-    { label: t.common.templates, href: "/resources" },
-    { label: t.common.useCases, href: "/tutorials" },
+    { label: t.common.glossary, href: "/glossaire" },
+    { label: t.common.documents, href: "/documents" },
     { label: t.common.insights, href: "/tutorials" },
     { label: t.common.premium, href: "/resources" },
     { label: t.common.companies, href: "#" },
@@ -41,11 +41,19 @@ export function MobileNav() {
           />
 
           <div className="absolute right-0 top-0 h-full w-full max-w-sm border-l border-white/10 bg-[#090b14] p-6 shadow-2xl">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="text-lg font-semibold text-white">GOV-AI-HUB</div>
-                <div className="font-ui text-xs text-slate-400">
-                  {t.common.brandLine}
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex min-w-0 items-center gap-3">
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10 text-indigo-200">
+                  <Orbit className="h-5 w-5" />
+                </div>
+
+                <div className="min-w-0">
+                  <div className="truncate text-lg font-semibold text-white">
+                    GOV-AI-HUB
+                  </div>
+                  <div className="font-ui truncate text-xs text-slate-400">
+                    {t.common.brandLine}
+                  </div>
                 </div>
               </div>
 
@@ -59,14 +67,43 @@ export function MobileNav() {
               </button>
             </div>
 
-            <div className="mt-6 flex items-center gap-3">
-              <button
-                type="button"
-                className="flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-slate-300"
-              >
-                <Search className="h-4 w-4" />
-              </button>
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-indigo-300">
+                  <Zap className="h-4 w-4" />
+                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
+                    XP
+                  </span>
+                </div>
+                <div className="mt-2 text-lg font-semibold text-white">{stats.xp}</div>
+              </div>
 
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-indigo-300">
+                  <CheckCircle2 className="h-4 w-4" />
+                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
+                    {locale === "fr" ? "Tutos" : "Tutorials"}
+                  </span>
+                </div>
+                <div className="mt-2 text-lg font-semibold text-white">
+                  {stats.completedTutorials}
+                </div>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
+                <div className="flex items-center justify-center gap-1 text-indigo-300">
+                  <Award className="h-4 w-4" />
+                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
+                    {locale === "fr" ? "Badges" : "Badges"}
+                  </span>
+                </div>
+                <div className="mt-2 text-lg font-semibold text-white">
+                  {stats.badgesUnlocked}
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-6 flex items-center gap-3">
               <div className="flex overflow-hidden rounded-full border border-white/10 bg-white/5">
                 <button
                   type="button"
