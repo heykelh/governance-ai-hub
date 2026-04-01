@@ -12,6 +12,7 @@ export function SiteHeader() {
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
+    { label: locale === "fr" ? "Dashboard" : "Dashboard", href: "/dashboard" },
     { label: t.common.simulator, href: "/audit-simulator" },
     { label: t.common.library, href: "/resources" },
     { label: t.common.templates, href: "/resources" },

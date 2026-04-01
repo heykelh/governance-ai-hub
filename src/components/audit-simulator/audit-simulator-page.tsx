@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   CheckCircle2,
   ShieldCheck,
@@ -12,6 +12,7 @@ import {
   Database,
   Scale,
   FileSpreadsheet,
+  Award,
 } from "lucide-react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SiteFooter } from "@/components/layout/site-footer";
@@ -33,6 +34,8 @@ type Question = {
     en: string;
   };
 };
+
+const QUIZ_XP_REWARD = 200;
 
 const questions: Question[] = [
   {
@@ -218,18 +221,8 @@ const questions: Question[] = [
 ];
 
 const answerLabels = {
-  fr: {
-    0: "Non",
-    1: "Partiellement",
-    2: "En grande partie",
-    3: "Oui",
-  },
-  en: {
-    0: "No",
-    1: "Partially",
-    2: "Mostly",
-    3: "Yes",
-  },
+  fr: { 0: "Non", 1: "Partiellement", 2: "En grande partie", 3: "Oui" },
+  en: { 0: "No", 1: "Partially", 2: "Mostly", 3: "Yes" },
 } as const;
 
 function getMaturity(score: number, locale: "fr" | "en") {
@@ -440,18 +433,69 @@ function getCategoryIcon(category: CategoryKey) {
       return BrainCircuit;
     case "audit":
       return BarChart3;
-    default:
-      return BarChart3;
   }
+}
+
+function updateStreak() {
+  const today = new Date().toISOString().slice(0, 10);
+  const lastActivity = window.localStorage.getItem("gov-ai-hub:last-activity-date");
+  const streakKey = "gov-ai-hub:streak-days";
+  const currentStreak = Number(window.localStorage.getItem(streakKey) ?? "0");
+
+  if (!lastActivity) {
+    window.localStorage.setItem(streakKey, "1");
+    window.localStorage.setItem("gov-ai-hub:last-activity-date", today);
+    return;
+  }
+
+  if (lastActivity === today) {
+    return;
+  }
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayIso = yesterday.toISOString().slice(0, 10);
+
+  if (lastActivity === yesterdayIso) {
+    window.localStorage.setItem(streakKey, String(currentStreak + 1));
+  } else {
+    window.localStorage.setItem(streakKey, "1");
+  }
+
+  window.localStorage.setItem("gov-ai-hub:last-activity-date", today);
 }
 
 export function AuditSimulatorPage() {
   const { t, locale } = useLanguage();
   const [answers, setAnswers] = useState<Record<string, AnswerValue>>({});
+  const [rewardGranted, setRewardGranted] = useState(false);
 
   const typedLocale = locale === "en" ? "en" : "fr";
   const answeredCount = Object.keys(answers).length;
   const totalQuestions = questions.length;
+  const allAnswered = answeredCount === totalQuestions;
+
+  useEffect(() => {
+    const runs = Number(window.localStorage.getItem("gov-ai-hub:audit-simulator:runs") ?? "0");
+    window.localStorage.setItem("gov-ai-hub:audit-simulator:runs", String(runs + 1));
+    window.localStorage.setItem("gov-ai-hub:audit-simulator:used", "true");
+    updateStreak();
+  }, []);
+
+  useEffect(() => {
+    if (!allAnswered || rewardGranted) return;
+
+    const rewardKey = "gov-ai-hub:audit-simulator:xp-granted";
+    const alreadyGranted = window.localStorage.getItem(rewardKey) === "true";
+
+    if (!alreadyGranted) {
+      const currentXp = Number(window.localStorage.getItem("gov-ai-hub:xp-total") ?? "0");
+      window.localStorage.setItem("gov-ai-hub:xp-total", String(currentXp + QUIZ_XP_REWARD));
+      window.localStorage.setItem(rewardKey, "true");
+    }
+
+    setRewardGranted(true);
+  }, [allAnswered, rewardGranted]);
 
   const score = useMemo(() => {
     const total = questions.reduce((sum, question) => sum + (answers[question.id] ?? 0), 0);
@@ -485,6 +529,15 @@ export function AuditSimulatorPage() {
             <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
               {t.auditSimulator.subtitle}
             </p>
+
+            {allAnswered ? (
+              <div className="mt-8 inline-flex items-center gap-2 rounded-2xl border border-emerald-400/20 bg-emerald-500/10 px-4 py-3 text-sm text-emerald-300">
+                <Award className="h-4 w-4" />
+                {typedLocale === "fr"
+                  ? `Quiz terminé • +${QUIZ_XP_REWARD} XP`
+                  : `Quiz completed • +${QUIZ_XP_REWARD} XP`}
+              </div>
+            ) : null}
           </div>
         </div>
       </section>
@@ -495,8 +548,7 @@ export function AuditSimulatorPage() {
             {questions.map((question, index) => (
               <div key={question.id} className="glass-card rounded-[28px] p-6">
                 <div className="font-ui mb-3 text-xs uppercase tracking-[0.18em] text-indigo-300">
-                  {getCategoryLabel(question.category, typedLocale)} •{" "}
-                  {typedLocale === "fr" ? "Question" : "Question"} {index + 1}
+                  {getCategoryLabel(question.category, typedLocale)} • Question {index + 1}
                 </div>
 
                 <h2 className="text-xl font-semibold text-white">

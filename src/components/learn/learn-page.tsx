@@ -21,16 +21,18 @@ export function LearnPage() {
     locale === "fr"
       ? [
           {
-            titre: "Parcours fondamental : comprendre la gouvernance data",
+            titre: "Parcours débutant : Fondamentaux de la Data Governance",
             niveau: "Débutant",
-            duree: "2h30",
+            duree: "3h15",
             description:
-              "Comprendre les rôles, la qualité de données, les politiques, les responsabilités et le pilotage.",
+              "Un parcours structuré pour comprendre ce qu’est réellement la gouvernance des données, pourquoi elle est devenue essentielle et comment commencer à la mettre en œuvre.",
+            href: "/learning-paths/fondamentaux-data-governance",
             modules: [
-              "Qu’est-ce que la Data Governance ?",
-              "Data Owner vs Data Steward",
-              "Dimensions de qualité de données",
-              "RACI et gouvernance opérationnelle",
+              "Définir la Data Governance",
+              "Comprendre les enjeux business et risques",
+              "Maîtriser les 4 piliers de gouvernance",
+              "Identifier les rôles Data Owner / Steward / Architect",
+              "Poser les premières bases d’un plan d’action",
             ],
           },
           {
@@ -39,6 +41,7 @@ export function LearnPage() {
             duree: "3h00",
             description:
               "Passer d’une vision théorique du RGPD à une capacité réelle de cadrage, de preuve et de conformité opérationnelle.",
+            href: "#",
             modules: [
               "Registre de traitements",
               "Bases légales et accountability",
@@ -52,6 +55,7 @@ export function LearnPage() {
             duree: "3h30",
             description:
               "Structurer l’inventaire des cas d’usage IA, la préparation documentaire et les logiques de readiness.",
+            href: "#",
             modules: [
               "Cartographier les usages IA",
               "AI literacy",
@@ -62,16 +66,18 @@ export function LearnPage() {
         ]
       : [
           {
-            titre: "Foundations: understanding data governance",
+            titre: "Beginner path: Data Governance Fundamentals",
             niveau: "Beginner",
-            duree: "2h30",
+            duree: "3h15",
             description:
-              "Understand roles, data quality, policies, responsibilities and governance steering.",
+              "A structured path to understand what data governance really is, why it matters and how to start implementing it in practice.",
+            href: "/learning-paths/fondamentaux-data-governance",
             modules: [
-              "What is Data Governance?",
-              "Data Owner vs Data Steward",
-              "Data quality dimensions",
-              "RACI and operational governance",
+              "Define Data Governance",
+              "Understand business challenges and risks",
+              "Master the 4 governance pillars",
+              "Identify Data Owner / Steward / Architect roles",
+              "Lay the foundations of an action plan",
             ],
           },
           {
@@ -80,6 +86,7 @@ export function LearnPage() {
             duree: "3h00",
             description:
               "Move from a theoretical GDPR understanding to a real operational compliance capability.",
+            href: "#",
             modules: [
               "Records of processing",
               "Legal bases and accountability",
@@ -93,6 +100,7 @@ export function LearnPage() {
             duree: "3h30",
             description:
               "Structure AI use case inventory, documentation readiness and governance logic.",
+            href: "#",
             modules: [
               "Map AI use cases",
               "AI literacy",
@@ -110,24 +118,28 @@ export function LearnPage() {
             type: "Tutoriel pratique",
             resume:
               "Un guide pas à pas pour définir les rôles Data Owner, Steward, Sponsor et équipes support.",
+            href: "/tutorials/raci-gouvernance-data",
           },
           {
             titre: "Tutoriel : lancer un mini audit RGPD en PME",
             type: "Tutoriel pratique",
             resume:
               "Comment cadrer le périmètre, collecter les preuves, noter les écarts et sortir un plan d’action.",
+            href: "/tutorials/mini-audit-rgpd-pme",
           },
           {
             titre: "Tutoriel : créer un registre des cas d’usage IA",
             type: "Tutoriel pratique",
             resume:
               "Un modèle de base pour inventorier les systèmes, les finalités, les risques et les responsables.",
+            href: "/tutorials/registre-usages-ia",
           },
           {
             titre: "Tutoriel : bâtir une scorecard qualité de données",
             type: "Tutoriel pratique",
             resume:
               "Définir les dimensions, les contrôles, les seuils et un suivi simple à présenter aux métiers.",
+            href: "/tutorials/scorecard-qualite-donnees",
           },
         ]
       : [
@@ -136,24 +148,28 @@ export function LearnPage() {
             type: "Practical tutorial",
             resume:
               "A step-by-step guide to define Data Owner, Steward, Sponsor and support roles.",
+            href: "/tutorials/raci-gouvernance-data",
           },
           {
             titre: "Tutorial: run a lightweight GDPR audit in an SME",
             type: "Practical tutorial",
             resume:
               "How to scope, collect evidence, note gaps and produce an action plan.",
+            href: "/tutorials/mini-audit-rgpd-pme",
           },
           {
             titre: "Tutorial: build an AI use case register",
             type: "Practical tutorial",
             resume:
               "A starter model to inventory systems, purposes, risks and owners.",
+            href: "/tutorials/registre-usages-ia",
           },
           {
             titre: "Tutorial: build a data quality scorecard",
             type: "Practical tutorial",
             resume:
               "Define dimensions, controls, thresholds and a simple business-facing tracker.",
+            href: "/tutorials/scorecard-qualite-donnees",
           },
         ];
 
@@ -381,7 +397,7 @@ export function LearnPage() {
                 </div>
 
                 <Link
-                  href="#"
+                  href={parcours.href}
                   className="mt-6 inline-block text-sm font-medium text-indigo-300"
                 >
                   {locale === "fr" ? "Ouvrir le parcours →" : "Open path →"}
@@ -421,7 +437,7 @@ export function LearnPage() {
               <p className="mt-4 text-slate-300">{tuto.resume}</p>
 
               <Link
-                href="#"
+                href={tuto.href}
                 className="mt-6 inline-block text-sm font-medium text-indigo-300"
               >
                 {locale === "fr" ? "Voir le tutoriel →" : "View tutorial →"}
