@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
-import { TutorialsPage } from "@/components/tutorials/tutorials-page";
+import { BlogPage } from "@/components/blog/blog-page";
 
 export default async function Page() {
   const session = await auth();
@@ -9,5 +9,5 @@ export default async function Page() {
     redirect("/login");
   }
 
-  return <TutorialsPage />;
+  return <BlogPage />;
 }

@@ -1,267 +1,56 @@
 "use client";
 
 import Link from "next/link";
-import {
-  BookOpen,
-  CheckCircle2,
-  FileText,
-  ShieldCheck,
-  Sparkles,
-  Target,
-} from "lucide-react";
+import { CheckCircle2, Sparkles } from "lucide-react";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
-import { LearningGamificationPanel } from "@/components/learn/learning-gamification-panel";
+import { learningPaths } from "@/data/learning-paths";
 import { useLanguage } from "@/providers/language-provider";
 
 export function LearnPage() {
-  const { locale, t } = useLanguage();
+  const { locale } = useLanguage();
+  const typedLocale = locale === "en" ? "en" : "fr";
 
-  const parcours =
-    locale === "fr"
+  const quickTutorials =
+    typedLocale === "fr"
       ? [
           {
-            titre: "Parcours débutant : Fondamentaux de la Data Governance",
-            niveau: "Débutant",
-            duree: "3h15",
-            description:
-              "Un parcours structuré pour comprendre ce qu’est réellement la gouvernance des données, pourquoi elle est devenue essentielle et comment commencer à la mettre en œuvre.",
-            href: "/learning-paths/fondamentaux-data-governance",
-            modules: [
-              "Définir la Data Governance",
-              "Comprendre les enjeux business et risques",
-              "Maîtriser les 4 piliers de gouvernance",
-              "Identifier les rôles Data Owner / Steward / Architect",
-              "Poser les premières bases d’un plan d’action",
-            ],
-          },
-          {
-            titre: "Parcours RGPD opérationnel",
-            niveau: "Intermédiaire",
-            duree: "3h00",
-            description:
-              "Passer d’une vision théorique du RGPD à une capacité réelle de cadrage, de preuve et de conformité opérationnelle.",
-            href: "#",
-            modules: [
-              "Registre de traitements",
-              "Bases légales et accountability",
-              "Privacy by design",
-              "Documentation et contrôles",
-            ],
-          },
-          {
-            titre: "Parcours AI Act & gouvernance IA",
-            niveau: "Intermédiaire / Avancé",
-            duree: "3h30",
-            description:
-              "Structurer l’inventaire des cas d’usage IA, la préparation documentaire et les logiques de readiness.",
-            href: "#",
-            modules: [
-              "Cartographier les usages IA",
-              "AI literacy",
-              "AI Act readiness",
-              "Gouvernance des risques IA",
-            ],
-          },
-        ]
-      : [
-          {
-            titre: "Beginner path: Data Governance Fundamentals",
-            niveau: "Beginner",
-            duree: "3h15",
-            description:
-              "A structured path to understand what data governance really is, why it matters and how to start implementing it in practice.",
-            href: "/learning-paths/fondamentaux-data-governance",
-            modules: [
-              "Define Data Governance",
-              "Understand business challenges and risks",
-              "Master the 4 governance pillars",
-              "Identify Data Owner / Steward / Architect roles",
-              "Lay the foundations of an action plan",
-            ],
-          },
-          {
-            titre: "Operational GDPR path",
-            niveau: "Intermediate",
-            duree: "3h00",
-            description:
-              "Move from a theoretical GDPR understanding to a real operational compliance capability.",
-            href: "#",
-            modules: [
-              "Records of processing",
-              "Legal bases and accountability",
-              "Privacy by design",
-              "Documentation and controls",
-            ],
-          },
-          {
-            titre: "AI Act & AI Governance path",
-            niveau: "Intermediate / Advanced",
-            duree: "3h30",
-            description:
-              "Structure AI use case inventory, documentation readiness and governance logic.",
-            href: "#",
-            modules: [
-              "Map AI use cases",
-              "AI literacy",
-              "AI Act readiness",
-              "AI risk governance",
-            ],
-          },
-        ];
-
-  const tutoriels =
-    locale === "fr"
-      ? [
-          {
-            titre: "Tutoriel : construire un RACI de gouvernance data",
-            type: "Tutoriel pratique",
-            resume:
-              "Un guide pas à pas pour définir les rôles Data Owner, Steward, Sponsor et équipes support.",
+            title: "Construire un RACI de gouvernance data",
+            category: "Gouvernance Data",
+            duration: "20 min",
             href: "/tutorials/raci-gouvernance-data",
           },
           {
-            titre: "Tutoriel : lancer un mini audit RGPD en PME",
-            type: "Tutoriel pratique",
-            resume:
-              "Comment cadrer le périmètre, collecter les preuves, noter les écarts et sortir un plan d’action.",
+            title: "Lancer un mini audit RGPD en PME",
+            category: "RGPD",
+            duration: "25 min",
             href: "/tutorials/mini-audit-rgpd-pme",
           },
           {
-            titre: "Tutoriel : créer un registre des cas d’usage IA",
-            type: "Tutoriel pratique",
-            resume:
-              "Un modèle de base pour inventorier les systèmes, les finalités, les risques et les responsables.",
+            title: "Créer un registre des usages IA",
+            category: "IA",
+            duration: "18 min",
             href: "/tutorials/registre-usages-ia",
-          },
-          {
-            titre: "Tutoriel : bâtir une scorecard qualité de données",
-            type: "Tutoriel pratique",
-            resume:
-              "Définir les dimensions, les contrôles, les seuils et un suivi simple à présenter aux métiers.",
-            href: "/tutorials/scorecard-qualite-donnees",
           },
         ]
       : [
           {
-            titre: "Tutorial: build a data governance RACI",
-            type: "Practical tutorial",
-            resume:
-              "A step-by-step guide to define Data Owner, Steward, Sponsor and support roles.",
+            title: "Build a data governance RACI",
+            category: "Data Governance",
+            duration: "20 min",
             href: "/tutorials/raci-gouvernance-data",
           },
           {
-            titre: "Tutorial: run a lightweight GDPR audit in an SME",
-            type: "Practical tutorial",
-            resume:
-              "How to scope, collect evidence, note gaps and produce an action plan.",
+            title: "Run a lightweight GDPR audit in an SME",
+            category: "GDPR",
+            duration: "25 min",
             href: "/tutorials/mini-audit-rgpd-pme",
           },
           {
-            titre: "Tutorial: build an AI use case register",
-            type: "Practical tutorial",
-            resume:
-              "A starter model to inventory systems, purposes, risks and owners.",
+            title: "Build an AI use case register",
+            category: "AI",
+            duration: "18 min",
             href: "/tutorials/registre-usages-ia",
-          },
-          {
-            titre: "Tutorial: build a data quality scorecard",
-            type: "Practical tutorial",
-            resume:
-              "Define dimensions, controls, thresholds and a simple business-facing tracker.",
-            href: "/tutorials/scorecard-qualite-donnees",
-          },
-        ];
-
-  const methodes =
-    locale === "fr"
-      ? [
-          {
-            titre: "Apprendre les fondamentaux",
-            texte:
-              "Commence par les concepts structurants : rôles, ownership, qualité de données, obligations RGPD, gouvernance IA.",
-            icon: BookOpen,
-          },
-          {
-            titre: "Produire des livrables",
-            texte:
-              "Transforme chaque apprentissage en preuve concrète : RACI, checklists, scorecards, registres, roadmaps.",
-            icon: FileText,
-          },
-          {
-            titre: "Passer en logique audit",
-            texte:
-              "Apprends à poser les bonnes questions, collecter les éléments de preuve et formuler des recommandations.",
-            icon: ShieldCheck,
-          },
-          {
-            titre: "Se rendre vendable",
-            texte:
-              "Lie toujours les sujets réglementaires à des enjeux métiers, de qualité, de risque et de transformation.",
-            icon: Target,
-          },
-        ]
-      : [
-          {
-            titre: "Learn the fundamentals",
-            texte:
-              "Start with the structuring concepts: roles, ownership, data quality, GDPR obligations and AI governance.",
-            icon: BookOpen,
-          },
-          {
-            titre: "Produce deliverables",
-            texte:
-              "Turn every lesson into something concrete: RACI, checklists, scorecards, registers and roadmaps.",
-            icon: FileText,
-          },
-          {
-            titre: "Think like an auditor",
-            texte:
-              "Learn to ask the right questions, collect evidence and formulate recommendations.",
-            icon: ShieldCheck,
-          },
-          {
-            titre: "Become marketable",
-            texte:
-              "Always connect regulation to business value, quality, risk and transformation.",
-            icon: Target,
-          },
-        ];
-
-  const tips =
-    locale === "fr"
-      ? [
-          {
-            titre: "1. Étudie un domaine à la fois",
-            texte:
-              "Commence par Data Governance ou RGPD, puis monte progressivement vers l’AI Act et l’audit.",
-          },
-          {
-            titre: "2. Produis un livrable à chaque étape",
-            texte:
-              "Après un module, crée un RACI, une checklist, un registre ou une mini-roadmap.",
-          },
-          {
-            titre: "3. Réécris avec un angle business",
-            texte:
-              "Sois toujours capable d’expliquer à quoi sert le contrôle, le document ou la gouvernance.",
-          },
-        ]
-      : [
-          {
-            titre: "1. Study one domain at a time",
-            texte:
-              "Start with Data Governance or GDPR, then move gradually toward AI Act and audit.",
-          },
-          {
-            titre: "2. Produce one deliverable at each step",
-            texte:
-              "After each module, create a RACI, checklist, register or mini-roadmap.",
-          },
-          {
-            titre: "3. Reframe everything in business terms",
-            texte:
-              "Always be able to explain what the control, document or governance mechanism is for.",
           },
         ];
 
@@ -277,195 +66,182 @@ export function LearnPage() {
           <div className="max-w-4xl">
             <div className="font-ui mb-5 inline-flex w-fit items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200">
               <Sparkles className="h-4 w-4" />
-              {t.learnPage.badge}
+              {typedLocale === "fr" ? "Apprentissage" : "Learning"}
             </div>
 
             <h1 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              {t.learnPage.title}
+              {typedLocale === "fr"
+                ? "Parcours et tutoriels"
+                : "Learning paths and tutorials"}
             </h1>
 
             <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300">
-              {t.learnPage.subtitle}
+              {typedLocale === "fr"
+                ? "Une page simple pour progresser avec 3 parcours structurés et quelques tutoriels rapides, concrets et utiles."
+                : "A simple page to progress through 3 structured learning paths and a few quick, practical and useful tutorials."}
             </p>
-
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="#parcours"
-                className="rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-400"
-              >
-                {t.learnPage.ctaPaths}
-              </Link>
-              <Link
-                href="#tutoriels"
-                className="rounded-2xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-medium text-white transition hover:bg-white/10"
-              >
-                {t.learnPage.ctaTutorials}
-              </Link>
-            </div>
           </div>
         </div>
       </section>
 
-      <LearningGamificationPanel />
-
       <section className="container-shell py-20">
-        <div className="mx-auto max-w-3xl text-center">
-          <p className="font-ui text-sm font-medium uppercase tracking-[0.24em] text-indigo-300">
-            {t.learnPage.sectionMethod}
-          </p>
-          <h2 className="section-title mt-4 text-white">
-            {t.learnPage.sectionMethodTitle}
+        <div className="max-w-3xl">
+          <h2 className="section-title text-white">
+            {typedLocale === "fr" ? "Les 3 parcours" : "The 3 learning paths"}
           </h2>
-          <p className="section-copy mx-auto text-slate-300">
-            {t.learnPage.sectionMethodText}
+
+          <p className="mt-4 max-w-2xl text-slate-300">
+            {typedLocale === "fr"
+              ? "Commence par les fondamentaux, puis avance vers l’audit opérationnel et la gouvernance IA."
+              : "Start with the fundamentals, then move toward operational audit and AI governance."}
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          {methodes.map((item) => {
-            const Icon = item.icon;
+        <div className="mt-12 grid gap-6 lg:grid-cols-3">
+          {learningPaths.map((path) => {
+            const title = path.title[typedLocale];
+            const level = path.level[typedLocale];
+            const excerpt = path.excerpt[typedLocale];
+            const modules = path.modules[typedLocale];
+            const deliverables = path.deliverables[typedLocale];
 
             return (
               <div
-                key={item.titre}
-                className="glass-card rounded-[28px] p-6 transition-transform duration-300 hover:-translate-y-1"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-indigo-400/20 bg-indigo-500/10">
-                  <Icon className="h-5 w-5 text-indigo-300" />
-                </div>
-
-                <h3 className="mt-5 text-xl font-semibold text-white">
-                  {item.titre}
-                </h3>
-                <p className="mt-3 text-sm leading-6 text-slate-300">
-                  {item.texte}
-                </p>
-              </div>
-            );
-          })}
-        </div>
-      </section>
-
-      <section id="parcours" className="border-y border-white/10 bg-white/[0.03]">
-        <div className="container-shell py-20">
-          <div className="max-w-3xl">
-            <p className="font-ui text-sm font-medium uppercase tracking-[0.24em] text-indigo-300">
-              {t.learnPage.sectionPaths}
-            </p>
-            <h2 className="section-title mt-4 text-white">
-              {t.learnPage.sectionPathsTitle}
-            </h2>
-            <p className="section-copy text-slate-300">
-              {t.learnPage.sectionPathsText}
-            </p>
-          </div>
-
-          <div className="mt-12 grid gap-6 lg:grid-cols-3">
-            {parcours.map((parcours) => (
-              <div
-                key={parcours.titre}
+                key={path.slug}
                 className="glass-card rounded-[30px] p-6 transition-transform duration-300 hover:-translate-y-1"
               >
                 <div className="font-ui flex items-center justify-between gap-3 text-sm text-slate-400">
                   <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1">
-                    {parcours.niveau}
+                    {level}
                   </span>
-                  <span>{parcours.duree}</span>
+                  <span>{path.duration}</span>
                 </div>
 
                 <h3 className="mt-5 text-2xl font-semibold text-white">
-                  {parcours.titre}
+                  {title}
                 </h3>
 
-                <p className="mt-4 text-slate-300">{parcours.description}</p>
+                <p className="mt-4 text-slate-300">{excerpt}</p>
+
+                <div className="mt-6 grid grid-cols-3 gap-3 text-center">
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <div className="text-lg font-semibold text-white">
+                      {modules.length}
+                    </div>
+                    <div className="font-ui mt-1 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                      {typedLocale === "fr" ? "Modules" : "Modules"}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <div className="text-lg font-semibold text-white">
+                      {path.duration}
+                    </div>
+                    <div className="font-ui mt-1 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                      {typedLocale === "fr" ? "Durée" : "Duration"}
+                    </div>
+                  </div>
+
+                  <div className="rounded-2xl border border-white/10 bg-white/5 p-3">
+                    <div className="text-lg font-semibold text-white">
+                      {level}
+                    </div>
+                    <div className="font-ui mt-1 text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                      {typedLocale === "fr" ? "Niveau" : "Level"}
+                    </div>
+                  </div>
+                </div>
 
                 <div className="mt-6">
-                  <p className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
-                    {locale === "fr" ? "Modules inclus" : "Included modules"}
-                  </p>
-                  <ul className="mt-4 space-y-3">
-                    {parcours.modules.map((module) => (
+                  <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
+                    {typedLocale === "fr" ? "Modules clés" : "Key modules"}
+                  </div>
+
+                  <ul className="mt-3 space-y-3">
+                    {modules.slice(0, 3).map((item) => (
                       <li
-                        key={module}
-                        className="font-ui flex items-start gap-2 text-sm text-slate-300"
+                        key={item.title}
+                        className="flex items-start gap-3 text-sm text-slate-300"
                       >
-                        <CheckCircle2 className="mt-0.5 h-4 w-4 text-indigo-300" />
-                        <span>{module}</span>
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-indigo-300" />
+                        <span>{item.title}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                <div className="mt-6">
+                  <div className="font-ui text-xs uppercase tracking-[0.18em] text-indigo-300">
+                    {typedLocale === "fr" ? "Livrables clés" : "Key deliverables"}
+                  </div>
+
+                  <ul className="mt-3 space-y-3">
+                    {deliverables.slice(0, 3).map((item) => (
+                      <li
+                        key={item}
+                        className="flex items-start gap-3 text-sm text-slate-300"
+                      >
+                        <CheckCircle2 className="mt-0.5 h-4 w-4 shrink-0 text-indigo-300" />
+                        <span>{item}</span>
                       </li>
                     ))}
                   </ul>
                 </div>
 
                 <Link
-                  href={parcours.href}
+                  href={`/learning-paths/${path.slug}`}
                   className="mt-6 inline-block text-sm font-medium text-indigo-300"
                 >
-                  {locale === "fr" ? "Ouvrir le parcours →" : "Open path →"}
+                  {typedLocale === "fr"
+                    ? "Ouvrir le parcours →"
+                    : "Open learning path →"}
                 </Link>
               </div>
-            ))}
-          </div>
+            );
+          })}
         </div>
       </section>
 
-      <section id="tutoriels" className="container-shell py-20">
-        <div className="max-w-3xl">
-          <p className="font-ui text-sm font-medium uppercase tracking-[0.24em] text-indigo-300">
-            {t.learnPage.sectionTutorials}
-          </p>
-          <h2 className="section-title mt-4 text-white">
-            {t.learnPage.sectionTutorialsTitle}
-          </h2>
-          <p className="section-copy text-slate-300">
-            {t.learnPage.sectionTutorialsText}
-          </p>
-        </div>
-
-        <div className="mt-12 grid gap-6 lg:grid-cols-2">
-          {tutoriels.map((tuto) => (
-            <div
-              key={tuto.titre}
-              className="glass-card rounded-[28px] p-6 transition-transform duration-300 hover:-translate-y-1"
-            >
-              <div className="font-ui inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-indigo-300">
-                {tuto.type}
-              </div>
-
-              <h3 className="mt-5 text-2xl font-semibold text-white">
-                {tuto.titre}
-              </h3>
-              <p className="mt-4 text-slate-300">{tuto.resume}</p>
-
-              <Link
-                href={tuto.href}
-                className="mt-6 inline-block text-sm font-medium text-indigo-300"
-              >
-                {locale === "fr" ? "Voir le tutoriel →" : "View tutorial →"}
-              </Link>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="border-y border-white/10 bg-white/[0.03]">
+      <section className="border-t border-white/10">
         <div className="container-shell py-20">
-          <div className="mx-auto max-w-3xl text-center">
-            <p className="font-ui text-sm font-medium uppercase tracking-[0.24em] text-indigo-300">
-              {t.learnPage.sectionTips}
-            </p>
-            <h2 className="section-title mt-4 text-white">
-              {t.learnPage.sectionTipsTitle}
+          <div className="max-w-3xl">
+            <h2 className="section-title text-white">
+              {typedLocale === "fr" ? "Tutoriels rapides" : "Quick tutorials"}
             </h2>
-            <p className="section-copy mx-auto text-slate-300">
-              {t.learnPage.sectionTipsText}
+
+            <p className="mt-4 max-w-2xl text-slate-300">
+              {typedLocale === "fr"
+                ? "Des contenus courts pour apprendre vite et produire des premiers supports utiles."
+                : "Short content to learn fast and produce useful first support materials."}
             </p>
           </div>
 
-          <div className="mt-12 grid gap-6 md:grid-cols-3">
-            {tips.map((item) => (
-              <div key={item.titre} className="glass-card rounded-[28px] p-6">
-                <h3 className="text-xl font-semibold text-white">{item.titre}</h3>
-                <p className="mt-4 text-slate-300">{item.texte}</p>
+          <div className="mt-12 grid gap-6 lg:grid-cols-3">
+            {quickTutorials.map((tutorial) => (
+              <div
+                key={tutorial.title}
+                className="glass-card rounded-[28px] p-6"
+              >
+                <div className="font-ui inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs uppercase tracking-[0.18em] text-indigo-300">
+                  {tutorial.category}
+                </div>
+
+                <h3 className="mt-5 text-xl font-semibold text-white">
+                  {tutorial.title}
+                </h3>
+
+                <p className="mt-4 text-sm text-slate-400">
+                  {tutorial.duration}
+                </p>
+
+                <Link
+                  href={tutorial.href}
+                  className="mt-6 inline-block text-sm font-medium text-indigo-300"
+                >
+                  {typedLocale === "fr"
+                    ? "Voir le tutoriel →"
+                    : "View tutorial →"}
+                </Link>
               </div>
             ))}
           </div>

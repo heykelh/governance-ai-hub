@@ -1,25 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Award, CheckCircle2, Menu, Orbit, X, Zap } from "lucide-react";
+import { Menu, Orbit, X } from "lucide-react";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/providers/language-provider";
-import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const { locale, setLocale, t } = useLanguage();
-  const stats = useLearningStats();
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
-    { label: t.common.simulator, href: "/audit-simulator" },
+    { label: locale === "fr" ? "Blog" : "Blog", href: "/blog" },
     { label: t.common.glossary, href: "/glossaire" },
     { label: t.common.documents, href: "/documents" },
-    { label: t.common.insights, href: "/tutorials" },
-    { label: t.common.premium, href: "/resources" },
-    { label: t.common.companies, href: "#" },
   ];
 
   return (
@@ -67,42 +61,6 @@ export function MobileNav() {
               </button>
             </div>
 
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-                <div className="flex items-center justify-center gap-1 text-indigo-300">
-                  <Zap className="h-4 w-4" />
-                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
-                    XP
-                  </span>
-                </div>
-                <div className="mt-2 text-lg font-semibold text-white">{stats.xp}</div>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-                <div className="flex items-center justify-center gap-1 text-indigo-300">
-                  <CheckCircle2 className="h-4 w-4" />
-                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
-                    {locale === "fr" ? "Tutos" : "Tutorials"}
-                  </span>
-                </div>
-                <div className="mt-2 text-lg font-semibold text-white">
-                  {stats.completedTutorials}
-                </div>
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 p-3 text-center">
-                <div className="flex items-center justify-center gap-1 text-indigo-300">
-                  <Award className="h-4 w-4" />
-                  <span className="font-ui text-[10px] uppercase tracking-[0.18em]">
-                    {locale === "fr" ? "Badges" : "Badges"}
-                  </span>
-                </div>
-                <div className="mt-2 text-lg font-semibold text-white">
-                  {stats.badgesUnlocked}
-                </div>
-              </div>
-            </div>
-
             <div className="mt-6 flex items-center gap-3">
               <div className="flex overflow-hidden rounded-full border border-white/10 bg-white/5">
                 <button
@@ -138,27 +96,6 @@ export function MobileNav() {
                 </Link>
               ))}
             </nav>
-
-            <div className="mt-8 grid gap-3">
-              <Button
-                asChild
-                className="rounded-2xl bg-indigo-500 text-white hover:bg-indigo-400"
-              >
-                <Link href="/learn" onClick={() => setOpen(false)}>
-                  {t.common.start}
-                </Link>
-              </Button>
-
-              <Button
-                asChild
-                variant="outline"
-                className="rounded-2xl border-white/15 bg-white/5 text-white hover:bg-white/10"
-              >
-                <Link href="/login" onClick={() => setOpen(false)}>
-                  {t.common.signIn}
-                </Link>
-              </Button>
-            </div>
           </div>
         </div>
       ) : null}

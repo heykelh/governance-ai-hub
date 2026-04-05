@@ -1,25 +1,19 @@
 "use client";
 
 import Link from "next/link";
-import { Award, CheckCircle2, Orbit, Zap } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Orbit } from "lucide-react";
 import { MobileNav } from "@/components/navigation/mobile-nav";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { useLanguage } from "@/providers/language-provider";
-import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function SiteHeader() {
   const { locale, setLocale, t } = useLanguage();
-  const stats = useLearningStats();
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
-    { label: t.common.simulator, href: "/audit-simulator" },
+    { label: locale === "fr" ? "Blog" : "Blog", href: "/blog" },
     { label: t.common.glossary, href: "/glossaire" },
     { label: t.common.documents, href: "/documents" },
-    { label: t.common.library, href: "/resources" },
-    { label: t.common.insights, href: "/tutorials" },
-    { label: t.common.premium, href: "/resources" },
   ];
 
   return (
@@ -55,40 +49,6 @@ export function SiteHeader() {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
-          <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
-            <div className="flex items-center gap-1 text-indigo-300">
-              <Zap className="h-4 w-4" />
-              <span className="font-ui text-xs uppercase tracking-[0.18em]">
-                XP
-              </span>
-            </div>
-            <span className="text-sm font-semibold text-white">{stats.xp}</span>
-
-            <span className="mx-1 h-4 w-px bg-white/10" />
-
-            <div className="flex items-center gap-1 text-indigo-300">
-              <CheckCircle2 className="h-4 w-4" />
-              <span className="font-ui text-xs uppercase tracking-[0.18em]">
-                {locale === "fr" ? "Tutos" : "Tutorials"}
-              </span>
-            </div>
-            <span className="text-sm font-semibold text-white">
-              {stats.completedTutorials}
-            </span>
-
-            <span className="mx-1 h-4 w-px bg-white/10" />
-
-            <div className="flex items-center gap-1 text-indigo-300">
-              <Award className="h-4 w-4" />
-              <span className="font-ui text-xs uppercase tracking-[0.18em]">
-                {locale === "fr" ? "Badges" : "Badges"}
-              </span>
-            </div>
-            <span className="text-sm font-semibold text-white">
-              {stats.badgesUnlocked}
-            </span>
-          </div>
-
           <div className="flex overflow-hidden rounded-full border border-white/10 bg-white/5">
             <button
               type="button"
@@ -111,10 +71,6 @@ export function SiteHeader() {
           </div>
 
           <LogoutButton />
-
-          <Button className="rounded-2xl bg-indigo-500 text-white hover:bg-indigo-400">
-            {t.common.companies}
-          </Button>
         </div>
 
         <MobileNav />

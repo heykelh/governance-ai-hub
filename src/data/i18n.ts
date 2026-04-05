@@ -79,6 +79,22 @@ export const messages = {
         "Passe des concepts aux preuves, aux audits, aux roadmaps et aux supports exploitables en entreprise.",
     },
 
+    gamification: {
+      badge: "Progression",
+      title: "Apprends comme dans un vrai parcours structuré",
+      subtitle:
+        "Gagne de l’XP, complète des tutoriels, débloque des badges et suis une progression visible au fil de ton apprentissage.",
+      xpTitle: "XP total",
+      completedTitle: "Tutoriels complétés",
+      badgesTitle: "Badges débloqués",
+      streakTitle: "Streak",
+      streakValue: "jours",
+      missionsTitle: "Missions du moment",
+      mission1: "Compléter un tutoriel",
+      mission2: "Lancer le simulateur d’audit",
+      mission3: "Débloquer un premier badge",
+    },
+
     learnPage: {
       badge: "Parcours d’apprentissage",
       title: "Développe une expertise concrète en gouvernance data, RGPD et IA.",
@@ -219,6 +235,22 @@ export const messages = {
       statsTitle: "Practical learning focused on deliverables",
       statsSubtitle:
         "Move from concepts to evidence, audits, roadmaps and enterprise-ready support materials.",
+    },
+
+    gamification: {
+      badge: "Progress",
+      title: "Learn through a real structured path",
+      subtitle:
+        "Earn XP, complete tutorials, unlock badges and follow visible progress throughout your learning journey.",
+      xpTitle: "Total XP",
+      completedTitle: "Completed tutorials",
+      badgesTitle: "Unlocked badges",
+      streakTitle: "Streak",
+      streakValue: "days",
+      missionsTitle: "Current missions",
+      mission1: "Complete one tutorial",
+      mission2: "Launch the audit simulator",
+      mission3: "Unlock a first badge",
     },
 
     learnPage: {
