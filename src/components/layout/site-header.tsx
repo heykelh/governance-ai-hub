@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Orbit } from "lucide-react";
+import { Orbit, BarChart3 } from "lucide-react";
 import { MobileNav } from "@/components/navigation/mobile-nav";
 import { LogoutButton } from "@/components/auth/logout-button";
 import { useLanguage } from "@/providers/language-provider";
+import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function SiteHeader() {
   const { locale, setLocale, t } = useLanguage();
+  const stats = useLearningStats();
+
+  const score = stats.xp ?? 0;
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
@@ -49,6 +53,14 @@ export function SiteHeader() {
         </div>
 
         <div className="hidden items-center gap-3 lg:flex">
+          <div className="flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-3 py-2">
+            <BarChart3 className="h-4 w-4 text-indigo-300" />
+            <span className="font-ui text-xs uppercase tracking-[0.18em] text-slate-400">
+              {locale === "fr" ? "Score" : "Score"}
+            </span>
+            <span className="text-sm font-semibold text-white">{score}</span>
+          </div>
+
           <div className="flex overflow-hidden rounded-full border border-white/10 bg-white/5">
             <button
               type="button"

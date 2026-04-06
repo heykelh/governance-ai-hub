@@ -46,25 +46,37 @@ export function HomePage() {
               </p>
 
               <h2 className="mt-4 text-3xl font-semibold tracking-tight text-white">
-                Heykelh
+                Heykel HACHICHE
               </h2>
 
-              <a
-                href="https://github.com/heykelh"
-                target="_blank"
-                rel="noreferrer"
-                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-indigo-300 hover:text-indigo-200"
-              >
-                <Globe className="h-4 w-4" />
-                github.com/heykelh
-              </a>
+              <div className="mt-4 flex flex-wrap gap-3">
+                <a
+                  href="https://github.com/heykelh"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-indigo-300 transition hover:bg-white/10 hover:text-indigo-200"
+                >
+                  <Globe className="h-4 w-4" />
+                  github.com/heykelh
+                </a>
+
+                <a
+                  href="https://www.linkedin.com/in/heykel-hachiche/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-2xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-indigo-300 transition hover:bg-white/10 hover:text-indigo-200"
+                >
+                  <Globe className="h-4 w-4" />
+                  LinkedIn
+                </a>
+              </div>
             </div>
 
             <div className="space-y-5 text-slate-300">
               <p className="leading-7">
                 {locale === "fr"
-                  ? "Je m’appelle Heykelh et j’ai créé GOV-AI-HUB pour construire une plateforme simple, sérieuse et utile autour de la Data Governance, du RGPD et de l’AI Act. Mon objectif est de rendre ces sujets plus accessibles, plus concrets et plus orientés livrables."
-                  : "My name is Heykelh and I created GOV-AI-HUB to build a simple, serious and useful platform around Data Governance, GDPR and the AI Act. My goal is to make these topics more accessible, more concrete and more deliverable-oriented."}
+                  ? "Je m’appelle Heykel et j’ai créé GOV-AI-HUB pour construire une plateforme simple, sérieuse et utile autour de la Data Governance, du RGPD et de l’AI Act. Mon objectif est de rendre ces sujets plus accessibles, plus concrets et plus orientés livrables."
+                  : "My name is Heykel and I created GOV-AI-HUB to build a simple, serious and useful platform around Data Governance, GDPR and the AI Act. My goal is to make these topics more accessible, more concrete and more deliverable-oriented."}
               </p>
 
               <p className="leading-7">
@@ -75,8 +87,8 @@ export function HomePage() {
 
               <p className="leading-7">
                 {locale === "fr"
-                  ? "Ce site reflète mon parcours, mon intérêt pour la gouvernance des données et ma volonté de construire des ressources réellement utiles pour apprendre, pratiquer et démontrer des compétences solides."
-                  : "This site reflects my journey, my interest in data governance and my desire to build resources that are genuinely useful for learning, practicing and demonstrating strong skills."}
+                  ? "Ce site reflète mon parcours, mon intérêt pour la gouvernance des données, la conformité et l’IA, ainsi que ma volonté de construire des ressources réellement utiles pour apprendre, pratiquer et démontrer des compétences solides."
+                  : "This site reflects my journey, my interest in data governance, compliance and AI, and my desire to build resources that are genuinely useful for learning, practicing and demonstrating strong skills."}
               </p>
 
               <div className="pt-2">

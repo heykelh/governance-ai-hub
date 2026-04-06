@@ -1,21 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { Sparkles, CheckCircle2 } from "lucide-react";
+import { Sparkles, CheckCircle2, BarChart3 } from "lucide-react";
 import { useLanguage } from "@/providers/language-provider";
+import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function HomeHero() {
   const { locale, t } = useLanguage();
+  const stats = useLearningStats();
+
+  const score = stats.xp ?? 0;
 
   return (
     <section className="relative overflow-hidden border-b border-white/10">
-      {/* Background */}
       <div className="hero-grid absolute inset-0 opacity-40" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(99,102,241,0.22),transparent_32%),radial-gradient(circle_at_top_right,rgba(129,140,248,0.14),transparent_26%)]" />
 
       <div className="container-shell relative py-20 lg:py-28">
         <div className="grid items-center gap-12 lg:grid-cols-2">
-          {/* LEFT */}
           <div>
             <div className="font-ui mb-5 inline-flex items-center gap-2 rounded-full border border-indigo-400/20 bg-indigo-500/10 px-4 py-2 text-sm text-indigo-200">
               <Sparkles className="h-4 w-4" />
@@ -50,7 +52,6 @@ export function HomeHero() {
               </Link>
             </div>
 
-            {/* VALUE POINTS */}
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
               {(locale === "fr"
                 ? [
@@ -77,43 +78,37 @@ export function HomeHero() {
             </div>
           </div>
 
-          {/* RIGHT - NEW SIMPLE BLOCK */}
           <div className="glass-card rounded-[32px] p-6 lg:p-7">
             <div className="inline-flex rounded-full border border-indigo-400/20 bg-indigo-500/10 px-3 py-1 text-xs uppercase tracking-[0.18em] text-indigo-300">
-              {locale === "fr"
-                ? "Ce que tu vas trouver ici"
-                : "What you will find here"}
+              {locale === "fr" ? "Score" : "Score"}
             </div>
 
-            <h3 className="mt-5 text-2xl font-semibold text-white">
-              {locale === "fr"
-                ? "Apprends les fondamentaux et passe à la pratique rapidement."
-                : "Learn the fundamentals and move to practice quickly."}
-            </h3>
+            <div className="mt-5 flex items-center gap-3">
+              <BarChart3 className="h-6 w-6 text-indigo-300" />
+              <h3 className="text-2xl font-semibold text-white">
+                {locale === "fr" ? "Ton score actuel" : "Your current score"}
+              </h3>
+            </div>
 
-            <p className="mt-4 text-sm leading-7 text-slate-300">
-              {locale === "fr"
-                ? "GOV-AI-HUB va droit au but : comprendre la Data Governance, le RGPD et l’AI Act sans complexité inutile. Tu avances avec des parcours clairs, des documents utiles et des tutoriels concrets."
-                : "GOV-AI-HUB focuses on what matters: understanding Data Governance, GDPR and the AI Act without unnecessary complexity. You progress through clear paths, useful documents and practical tutorials."}
-            </p>
+            <div className="mt-6 text-6xl font-semibold leading-none text-white">
+              {score}
+            </div>
 
-            <div className="mt-6 grid gap-3">
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
-                {locale === "fr"
-                  ? "Parcours beginner, intermediate, advanced"
-                  : "Beginner, intermediate and advanced paths"}
+            <div className="mt-6 grid gap-3 sm:grid-cols-2">
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <div className="font-ui text-xs uppercase tracking-[0.16em] text-slate-400">
+                  {locale === "fr" ? "Tutoriels complétés" : "Completed tutorials"}
+                </div>
+                <div className="mt-2 text-2xl font-semibold text-white">
+                  {stats.completedTutorials ?? 0}
+                </div>
               </div>
 
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
-                {locale === "fr"
-                  ? "Tutoriels rapides et concrets"
-                  : "Quick and practical tutorials"}
-              </div>
-
-              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm text-slate-200">
-                {locale === "fr"
-                  ? "Glossaire + documents professionnels"
-                  : "Glossary + professional documents"}
+              <div className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3">
+                <div className="font-ui text-xs uppercase tracking-[0.16em] text-slate-400">
+                  {locale === "fr" ? "Parcours disponibles" : "Available paths"}
+                </div>
+                <div className="mt-2 text-2xl font-semibold text-white">3</div>
               </div>
             </div>
 
@@ -123,8 +118,8 @@ export function HomeHero() {
                 className="inline-flex rounded-2xl bg-indigo-500 px-5 py-3 text-sm font-medium text-white transition hover:bg-indigo-400"
               >
                 {locale === "fr"
-                  ? "Explorer les contenus"
-                  : "Explore content"}
+                  ? "Continuer l’apprentissage"
+                  : "Continue learning"}
               </Link>
             </div>
           </div>

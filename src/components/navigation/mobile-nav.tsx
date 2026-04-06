@@ -1,13 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Orbit, X } from "lucide-react";
+import { Menu, Orbit, X, BarChart3 } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/providers/language-provider";
+import { useLearningStats } from "@/hooks/use-learning-stats";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
   const { locale, setLocale, t } = useLanguage();
+  const stats = useLearningStats();
+
+  const score = stats.xp ?? 0;
 
   const navItems = [
     { label: t.common.learn, href: "/learn" },
@@ -59,6 +63,16 @@ export function MobileNav() {
               >
                 <X className="h-5 w-5" />
               </button>
+            </div>
+
+            <div className="mt-6 rounded-2xl border border-white/10 bg-white/5 p-4">
+              <div className="flex items-center gap-2 text-indigo-300">
+                <BarChart3 className="h-4 w-4" />
+                <span className="font-ui text-xs uppercase tracking-[0.18em]">
+                  {locale === "fr" ? "Score" : "Score"}
+                </span>
+              </div>
+              <div className="mt-2 text-2xl font-semibold text-white">{score}</div>
             </div>
 
             <div className="mt-6 flex items-center gap-3">

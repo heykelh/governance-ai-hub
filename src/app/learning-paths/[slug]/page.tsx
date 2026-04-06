@@ -1,19 +1,20 @@
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
+import { notFound } from "next/navigation";
 import { LearningPathDetailPage } from "@/components/learn/learning-path-detail-page";
+import { getLearningPathBySlug } from "@/data/learning-paths";
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const session = await auth();
+type PageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
 
-  if (!session?.user) {
-    redirect("/login");
-  }
-
+export default async function Page({ params }: PageProps) {
   const { slug } = await params;
+  const path = getLearningPathBySlug(slug);
+
+  if (!path) {
+    notFound();
+  }
 
   return <LearningPathDetailPage slug={slug} />;
 }
