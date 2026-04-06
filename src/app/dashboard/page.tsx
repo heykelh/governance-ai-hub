@@ -1,13 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@/auth";
-import { MemberDashboardPage } from "@/components/dashboard/member-dashboard-page";
 
-export default async function Page() {
-  const session = await auth();
-
-  if (!session?.user) {
-    redirect("/login");
-  }
-
-  return <MemberDashboardPage />;
+export default function Page() {
+  redirect("/learn");
 }

@@ -8,21 +8,63 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { messages, type Locale } from "@/data/i18n";
+
+export type Locale = "fr" | "en";
+
+export const messages = {
+  fr: {
+    common: {
+      brandLine: "Gouvernance Data • RGPD • AI Act",
+      start: "Commencer",
+      signIn: "Connexion",
+      companies: "Entreprises",
+      explore: "Explorer",
+      learn: "Apprendre",
+      glossary: "Glossaire",
+      documents: "Documents",
+      blog: "Blog",
+      cookies: "Cookies",
+    },
+  },
+  en: {
+    common: {
+      brandLine: "Data Governance • GDPR • AI Act",
+      start: "Start",
+      signIn: "Sign in",
+      companies: "Companies",
+      explore: "Explore",
+      learn: "Learn",
+      glossary: "Glossary",
+      documents: "Documents",
+      blog: "Blog",
+      cookies: "Cookies",
+    },
+  },
+} as const;
+
+type Messages = (typeof messages)[Locale];
 
 type LanguageContextValue = {
   locale: Locale;
-  setLocale: (locale: Locale) => void;
-  t: typeof messages.fr;
+  setLocale: (nextLocale: Locale) => void;
+  t: Messages;
 };
 
-const LanguageContext = createContext<LanguageContextValue | null>(null);
+const LanguageContext = createContext<LanguageContextValue | undefined>(undefined);
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [locale, setLocaleState] = useState<Locale>("fr");
+const STORAGE_KEY = "gov-ai-hub-locale";
+
+export function LanguageProvider({
+  children,
+  initialLocale = "fr",
+}: {
+  children: ReactNode;
+  initialLocale?: Locale;
+}) {
+  const [locale, setLocaleState] = useState<Locale>(initialLocale);
 
   useEffect(() => {
-    const stored = window.localStorage.getItem("gov-ai-hub-locale") as Locale | null;
+    const stored = window.localStorage.getItem(STORAGE_KEY);
     if (stored === "fr" || stored === "en") {
       setLocaleState(stored);
     }
@@ -30,16 +72,16 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLocale = (nextLocale: Locale) => {
     setLocaleState(nextLocale);
-    window.localStorage.setItem("gov-ai-hub-locale", nextLocale);
+    window.localStorage.setItem(STORAGE_KEY, nextLocale);
   };
 
-  const value = useMemo(
+  const value = useMemo<LanguageContextValue>(
     () => ({
       locale,
       setLocale,
       t: messages[locale],
     }),
-    [locale]
+    [locale],
   );
 
   return (
